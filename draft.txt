@@ -1,0 +1,30 @@
+CLUIObject: 可渲染可刷新的对象
+  visible/render
+  enabled/update
+  action
+
+  owner
+  owner_view
+  attrs:hash(string->var)
+  ons:hash(string->array of proc)
+  child:hash(string->CLUIObject)
+  
+  rect 实际显示的rect
+  (def _rect)
+  need_render
+  spriteset:array of native sprites
+  运算符重载:<
+  
+
+CLUI script example:
+
+test_window :CLWindow {  # <- ruby block
+  rect (200, 200, 200, 100)
+  life=0
+  on_update {
+    life+=1
+    if life%10==0
+      new_window "child"+life.to_s, :CLWindow, life, {|life| rect (200+life, 200+life, 50, 50) }
+    end
+  }
+}
